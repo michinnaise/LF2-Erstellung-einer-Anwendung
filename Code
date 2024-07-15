@@ -1,0 +1,11 @@
+# Code
+
+import tkinter as tk 
+
+Fenster = tk.Tk()
+
+label1 = tk.Label(Fenster, text="Hallo Welt", fg="black")
+label1.pack()
+
+
+Fenster.mainloop()

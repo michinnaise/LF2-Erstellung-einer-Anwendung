@@ -1,0 +1,82 @@
+import tkinter as tk                                                                                    ### Defineren von "tkinter" als "tk"
+from tkinter import messagebox
+
+# Berechnung vom Preis pro Minute als Funktion
+def berechne_preis_dauer(dauer):
+
+    grundgebuehr = 1.00                                                                                 ### Grundgebühr in Euro
+    preis_pro_minute = 0.15                                                                             ### Preis pro Minute in Euro
+
+    return grundgebuehr + (preis_pro_minute * dauer)
+
+# Berechnung von Preis pro Kilometer als Funktion
+def berechne_preis_strecke(strecke):
+
+    grundgebuehr = 1.00                                                                                 ### Grundgebühr in Euro
+    preis_pro_km = 0.50                                                                                 ### Preis pro Kilometer in Euro
+
+    return grundgebuehr + (preis_pro_km * strecke)
+
+# Berechnung basierend auf der Auswahl des User
+def berechne_preis():
+
+    # Überprüfung ob die Checkbox Nutzungsdauer ausgewählt wurde
+    if var.get() == 1:
+
+        try:
+
+            # Berechnung des Preis pro Minute basierend auf die EIngabe des Users
+            dauer = float(entry.get())
+            preis = berechne_preis_dauer(dauer)
+            messagebox.showinfo("Preisberechnung", f"Der Fahrpreis beträgt: {preis:.2f} Euro")         ### Pop-Up Fenser welches den Preis ausgibt
+
+        # Falls der User ungültige Zeichen wie z.B. Buchstaben oder Sondderzeichen eingibt wird folgende Fehlermeldung angezeigt:
+        except ValueError:
+
+            messagebox.showerror("Fehler", "Bitte eine gültige Zahl eingeben.")                        ### Pop-Up Fenster, welches den User auf einen fehler der Eingabe hinweist
+
+    # Überprüfung ob die Checkbox Nutzungsstrecke ausgewählt wurde
+    elif var.get() == 2:
+
+        try:
+
+            # Berechnung des Preis pro Strecke basierend auf die EIngabe des Users
+            strecke = float(entry.get())
+            preis = berechne_preis_strecke(strecke)
+            messagebox.showinfo("Preisberechnung", f"Der Fahrpreis beträgt: {preis:.2f} Euro")
+
+        # Falls der User ungültige Zeichen wie z.B. Buchstaben oder Sondderzeichen eingibt wird folgende Fehlermeldung angezeigt:
+        except ValueError:
+
+            messagebox.showerror("Fehler", "Bitte eine gültige Zahl eingeben.")                         ### Pop-Up Fenster, welches den User auf einen fehler der Eingabe hinweist
+
+    else:
+
+        # Falls der User keine Checkbox ausgewählt hat, wird folgende Fehlermeldung angezeigt:
+        messagebox.showerror("Fehler", "Bitte eine Berechnungsmethode auswählen.")
+
+# Definieren des Interface Namens und Titels
+app = tk.Tk()
+app.title("E-Scooter Preisberechnung")
+
+# Erstellung einer Variabel für die Checkbox
+var = tk.IntVar()
+
+# Erstellung eines Labels
+tk.Label(app, text="E-Scooter Preisberechnung", font=("Arial", 16)).pack(pady=10)
+
+# Erstellung der Checkboxen für Nutzungsdauer und Nutzungsstrecke inklusive Zuweisung und Definitons der Variablen
+tk.Radiobutton(app, text="Nutzungsdauer (in Minuten)", variable=var, value=1).pack(anchor="w")
+tk.Radiobutton(app, text="Nutzungsstrecke (in Kilometern)", variable=var, value=2).pack(anchor="w")
+
+# Erstellung eines Labels
+tk.Label(app, text="Eingabe:").pack(pady=5)
+
+# Erstellung eine Eingabebox
+entry = tk.Entry(app)
+entry.pack(pady=5)
+
+# Erstellung und benneung des Berechnungsbuttons
+tk.Button(app, text="Berechnen", command=berechne_preis).pack(pady=20)
+
+app.mainloop()

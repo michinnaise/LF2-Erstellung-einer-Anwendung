@@ -1,0 +1,48 @@
+import tkinter as tk
+from tkinter import messagebox
+
+def berechne_preis_dauer(dauer):
+    grundgebuehr = 1.00  # Grundgebühr in Euro
+    preis_pro_minute = 0.15  # Preis pro Minute in Euro
+    return grundgebuehr + (preis_pro_minute * dauer)
+
+def berechne_preis_strecke(strecke):
+    grundgebuehr = 1.00  # Grundgebühr in Euro
+    preis_pro_km = 0.50  # Preis pro Kilometer in Euro
+    return grundgebuehr + (preis_pro_km * strecke)
+
+def berechne_preis():
+    if var.get() == 1:
+        try:
+            dauer = float(entry.get())
+            preis = berechne_preis_dauer(dauer)
+            messagebox.showinfo("Preisberechnung", f"Der Fahrpreis beträgt: {preis:.2f} Euro")
+        except ValueError:
+            messagebox.showerror("Fehler", "Bitte eine gültige Zahl eingeben.")
+    elif var.get() == 2:
+        try:
+            strecke = float(entry.get())
+            preis = berechne_preis_strecke(strecke)
+            messagebox.showinfo("Preisberechnung", f"Der Fahrpreis beträgt: {preis:.2f} Euro")
+        except ValueError:
+            messagebox.showerror("Fehler", "Bitte eine gültige Zahl eingeben.")
+    else:
+        messagebox.showerror("Fehler", "Bitte eine Berechnungsmethode auswählen.")
+
+app = tk.Tk()
+app.title("E-Scooter Preisberechnung")
+
+var = tk.IntVar()
+
+tk.Label(app, text="E-Scooter Preisberechnung", font=("Arial", 16)).pack(pady=10)
+
+tk.Radiobutton(app, text="Nutzungsdauer (in Minuten)", variable=var, value=1).pack(anchor="w")
+tk.Radiobutton(app, text="Nutzungsstrecke (in Kilometern)", variable=var, value=2).pack(anchor="w")
+
+tk.Label(app, text="Eingabe:").pack(pady=5)
+entry = tk.Entry(app)
+entry.pack(pady=5)
+
+tk.Button(app, text="Berechnen", command=berechne_preis).pack(pady=20)
+
+app.mainloop()
